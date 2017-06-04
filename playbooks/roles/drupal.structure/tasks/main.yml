@@ -1,0 +1,18 @@
+---
+
+- name: Ensure directory structure exists.
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    owner: "{{ webserver_user }}"
+    group: "{{ webserver_group }}"
+  become: true
+  become_user: root
+  with_items:
+    - "{{ deployment_root }}"
+    - "{{ deployment_root }}/core"
+    - "{{ deployment_root }}/sites"
+    - "{{ server_root }}"
+
+

@@ -1,0 +1,13 @@
+---
+
+- src: mikegleasonjr.swap
+- src: geerlingguy.security
+- src: geerlingguy.repo-epel
+- src: geerlingguy.repo-remi
+- src: geerlingguy.firewall
+- src: geerlingguy.ntp
+- src: geerlingguy.git
+- src: geerlingguy.php
+- src: geerlingguy.nginx
+- src: geerlingguy.certbot
+- src: geerlingguy.mysql

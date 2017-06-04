@@ -1,0 +1,25 @@
+---
+
+- name: Ensure the site directories exist.
+  file:
+    state: directory
+    path: "{{ item }}"
+    mode: 0755
+    owner: "{{ webserver_user }}"
+    group: "{{ webserver_group }}"
+  become: true
+  become_user: root
+  with_items:
+    - "{{ server_root }}/{{ site_conf_path }}/files"
+
+- name: Ensure symlink to core
+  file:
+    state: link
+    src: "{{ deployment_root }}/core/codebase.{{ deployment_core_version }}"
+    dest: "{{ server_root }}/{{ site_conf_path }}/core"
+    owner: "{{ webserver_user }}"
+    group: "{{ webserver_group }}"
+  become: true
+  become_user: root
+  when: deployment_core_version is defined
+

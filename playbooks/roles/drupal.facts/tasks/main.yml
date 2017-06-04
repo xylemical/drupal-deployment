@@ -1,0 +1,6 @@
+---
+- name: Generate drupal facts relevant to the site from the URL.
+  set_fact:
+    site_host: "{{ site_url | regex_replace('^https?://', '') | regex_replace('/.*', '') }}"
+    site_base_path: "{{ site_url | regex_replace('^https?://', '') | regex_replace('/$', '') | regex_replace('^.*?(/|$)', '/') }}"
+    site_conf_path: "{{ site_url | regex_replace('^https?://', '') | regex_replace('/$', '') | regex_replace('(:|/)', '.') }}"

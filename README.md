@@ -6,14 +6,14 @@ The purpose of this repository is to provide a set of tools that can be chained 
 
 These steps can be defined as follows:
 
-* [Setup](setup/README.md) - Creating a new environment for a drupal code project
-* [Initialisation](init/README.md) - Creating a new drupal code project
-* [Development](devel/README.md) - Extending the environment to allow development to take place and extending drupal to provide common tools.
-* [Testing](test/README.md) - Extending the environment to allow automated testing to take place.
-* [Packaging](package/README.md) - Taking a developed codebase and/or configuration setup and making it available for deployment.
-* [Deployment](deploy/README.md) - Providing a consistant, testable deployment process.
+* [Setup](docs/environ.md) - Creating a new environment for a drupal code project
+* [Initialisation](docs/project.md) - Creating a new drupal code project
+* [Development](docs/devel.md) - Extending the environment to allow development to take place and extending drupal to provide common tools.
+* [Testing](docs/test.md) - Extending the environment to allow automated testing to take place.
+* [Packaging](docs/package.md) - Taking a developed codebase and/or configuration setup and making it available for deployment.
+* [Deployment](docs/deploy.md) - Providing a consistant, testable deployment process.
 
-## Requirements
+# Requirements
 
 The base requirement is to run most of these scripts to configure an environment or environments from a host computer that is not involved with the execution of the project.
 
@@ -22,3 +22,22 @@ As the host, the software requirements are as follows:
 * A linux shell capable of running bash commands.
 
 While it is possible to directly develop on the host machine, this is not advised as it makes the clean resets required for proper testing overly complex, and difficult to get right.
+
+
+# Installation
+
+The expected installation of this repository is as follows:
+```sh
+# Clone a copy of the repository.
+git clone https://github.com/xylemical/drupal-deployment.git
+cd drupal-deployment
+
+# Install the ansible dependencies.
+ansible-galaxy install -r requirements.yml
+
+# Create the customizable config.yml
+cp config.dist.yml config.yml
+
+# Create the customizable hosts file
+cp hosts.dist hosts
+```

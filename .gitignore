@@ -1,2 +1,15 @@
-# Customisable configuration.
-config.yml
+# Customisable configuration, used within the ansible scripts.
+/config.yml
+
+# Customizable ansible files.
+/hosts
+/group_vars
+
+# Location for vagrant box.
+/box
+
+# All roles directories are ignored so galaxy roles are not committed.
+/playbooks/installed-roles
+
+# Retry behaviours for ansible need to be ignored.
+*.retry

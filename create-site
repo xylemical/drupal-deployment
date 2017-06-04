@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+# Creates a site under the targeted environment
+#
+
+ansible-playbook -i hosts -e target_environment=development create-site.yml -e site_url=https://test.local/drive/safe/

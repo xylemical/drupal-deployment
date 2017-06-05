@@ -1,6 +1,0 @@
----
-- hosts: "{{ target_environment }}"
-  roles:
-    - drupal.facts
-    - drupal.structure
-    - drupal.site

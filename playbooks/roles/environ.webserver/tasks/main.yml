@@ -1,0 +1,7 @@
+---
+
+#- name: Install let's encrypt nginx setup.
+#  copy:
+#    src: "le-well-known.conf"
+#    dest: "/etc/nginx/default.d/le-well-known.conf"
+#  when: webserver == 'nginx' and not certbot_ignore

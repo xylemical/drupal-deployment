@@ -1,0 +1,27 @@
+---
+
+- name: Add deploy user.
+  user:
+    name: "{{ deploy_user_name }}"
+    comment: "{{ deploy_user_comment }}"
+    uid: "{{ deploy_user_uid }}"
+  become: true
+  become_user: root
+
+- name: Set deploy user password.
+  user:
+    name: "{{ deploy_user_name }}"
+    password: "{{ deploy_user_password }}"
+  when: deploy_user_password != false
+  become: true
+  become_user: root
+
+- name: Add deploy user authorized keys.
+  authorized_key:
+    user: "{{ deploy_user_name }}"
+    state: present
+    key: "{{ lookup('file', item) }}"
+  with_items: "{{ deploy_user_public_keys }}"
+  become: true
+  become_user: root
+

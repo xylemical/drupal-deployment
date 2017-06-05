@@ -1,0 +1,11 @@
+---
+#
+# This is for setting up the core aspects of the environment, things that are absolutely required on every server or
+# virtual machine.
+#
+
+- hosts: "{{ target_environment }}"
+  roles:
+    - role: environ.core
+      vars:
+        security_sudoers_passworded: [ "{{ deploy_user_name | default('deploy') }}" ]

@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# Creates a site under the targeted environment
+#
+
+ansible-playbook -i ../hosts ../playbooks/environ-webserver.yml \
+  -e target_environment=development

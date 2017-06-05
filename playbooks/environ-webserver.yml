@@ -1,0 +1,9 @@
+---
+#
+# This installs a PHP webserver, without the database.
+#
+
+- hosts: "{{ target_environment }}"
+  roles:
+    - role: environ.webserver
+

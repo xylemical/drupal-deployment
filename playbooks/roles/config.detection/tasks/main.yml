@@ -1,1 +1,19 @@
 ---
+
+- name: Check the config.yml exists.
+  local_action: stat path="{{ config_variables_path }}"
+  register: config_yml
+
+- name: Confirmation of config.yml.
+  fail:
+    msg: 'The config.yml is required to be able to perform this action'
+  when: not config_yml.stat.exists
+
+- name: Include the config.yml.
+  include_vars: "{{ config_variables_path }}"
+
+- name: Confirmation of role required variable definitions.
+  include: 'check_vars.yml'
+  vars:
+    check_vars: "{{ required_vars }}"
+  when: required_vars is defined

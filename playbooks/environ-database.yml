@@ -1,0 +1,8 @@
+---
+#
+# This installs a database server.
+#
+
+- hosts: "{{ target_environment }}"
+  roles:
+    - role: environ.database

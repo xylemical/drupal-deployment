@@ -1,0 +1,19 @@
+---
+dependencies:
+  # Ensure the configuration is loaded and the proper variables are set.
+  - role: config.detection
+    required_vars:
+      - dbserver
+      - dbserver_dir
+
+  # Install the mariadb database server
+  - role: geerlingguy.mysql
+    vars:
+      mysql_packages:
+        - mariadb
+        - mariadb-server
+      mysql_datadir: "{{ dbserver_dir }}"
+    become: true
+    become_user: root
+    when: dbserver == 'mariadb' and ansible_os_family == "RedHat"
+

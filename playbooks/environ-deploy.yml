@@ -1,0 +1,8 @@
+---
+#
+# Initializes the environment with a deployment user, so all future deployments use that value.
+#
+
+- hosts: "{{ target_environment }}"
+  roles:
+    - role: environ.deploy

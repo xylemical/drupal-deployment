@@ -1,0 +1,22 @@
+
+
+# Username of server user for the deployments.
+deployment_user: 'deploy'
+
+# Location of the drupal deployment installation.
+deployment_root: '/data/drupal'
+
+# The software to be used for the webservers.
+webserver: 'nginx'
+
+# uid for the webserver.
+webserver_owner: 'nginx'
+
+# gid for the webserver.
+webserver_group: 'nginx'
+
+# The software to be used for the databases.
+dbserver: 'mariadb'
+
+# The path where all the databases are stored.
+dbserver_dir: '/var/lib/mysql'

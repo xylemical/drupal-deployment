@@ -41,3 +41,16 @@ cp config.dist.yml config.yml
 # Create the customizable hosts file
 cp hosts.dist hosts
 ```
+
+
+## Setting up a new machine
+
+
+When not using the Vagrantfile ansible config, ensure that `config.ssh.insert_key = false`. 
+Then make sure the IP for the vagrant machine has the following entry in the hosts file. 
+                                                           
+```
+[setup]
+10.0.0.15 ansible_ssh_port=22 ansible_ssh_user=vagrant ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
+```
+

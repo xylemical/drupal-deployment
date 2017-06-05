@@ -1,0 +1,7 @@
+---
+
+- name: Confirmation of required variable definitions.
+  fail:
+    msg: 'The variable "{{ item }}" needs to be defined.'
+  when: item not in hostvars[inventory_hostname]
+  with_items: "{{ check_vars }}"

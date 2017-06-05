@@ -1,0 +1,36 @@
+---
+dependencies:
+  # Ensure the configuration is loaded and the proper variables are set.
+  - role: config.detection
+    required_vars:
+      - ntp_timezone
+
+  # Ensure the machine has a swapfile if it is possible (VM's don't really support swap).
+  - role: mikegleasonjr.swap
+    become: true
+    become_user: root
+    ignore_errors: true
+
+  # Require access to the appropriate system extension repositories.
+  - role: geerlingguy.repo-epel
+    become: true
+    become_user: root
+
+  - role: geerlingguy.repo-remi
+    become: true
+    become_user: root
+
+  # Require there is some basic security for the server.
+  - role: geerlingguy.security
+    become: true
+    become_user: root
+
+  # Require that the firewall
+  - role: geerlingguy.firewall
+    become: true
+    become_user: root
+
+  # Ensure the time zone is properly calibrated.
+  - role: geerlingguy.ntp
+    become: true
+    become_user: root

@@ -3,4 +3,6 @@
 # Creates a site under the targeted environment
 #
 
-ansible-playbook -i ../hosts ../playbooks/environ-deploy.yml
+ansible-playbook -i ../hosts ../playbooks/environ-deploy.yml \
+  -e target_environment=development
+

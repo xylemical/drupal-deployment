@@ -1,0 +1,23 @@
+---
+
+- name: Ensure support for the se-linux module is enabled
+  yum:
+    name: policycoreutils-python
+    state: present
+  when: selinux_enabled and ansible_os_family == "RedHat"
+
+- name: Ensure se-linux file exists for context setting.
+  file:
+    src: "{{ path }}"
+    mode: 0755
+    owner: "{{ path_owner }}"
+    group: "{{ path_group }}"
+    state: "{{ path_state }}"
+  when: selinux_path is defined and path is defined and selinux_path == path and path_state is defined and path_owner is defined and path_group is defined
+
+- name: Ensure se-linux file context is set correctly.
+  sefcontext:
+    target: "{{ selinux_path }}"
+    setype: "{{ selinux_context }}"
+    state: present
+  when: selinux_path is defined and selinux_context is defined and selinux_enabled

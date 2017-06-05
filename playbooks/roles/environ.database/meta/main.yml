@@ -5,6 +5,20 @@ dependencies:
     required_vars:
       - dbserver
       - dbserver_dir
+      - dbserver_user
+      - dbserver_group
+
+  # Ensure data directory has the correct permissions for selinux.
+  - role: environ.selinux
+    vars:
+      selinux_path: "{{ dbserver_dir }}"
+      selinux_context: mysqld_db_t
+      path: "{{ dbserver_dir }}"
+      path_user: "{{ dbserver_user }}"
+      path_group: "{{ dbserver_group }}"
+      path_state: directory
+    become: true
+    become_user: root
 
   # Install the mariadb database server
   - role: geerlingguy.mysql

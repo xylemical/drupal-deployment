@@ -1,0 +1,8 @@
+#!/bin/sh
+
+ansible-playbook -i ../hosts ../playbooks/drupal-site-install.yml \
+  -e target_environment=development \
+  -e drupal_version=0.0.1 \
+  -e site_version=0.0.1 \
+  -e site_config_version=0.0.1 \
+  -e site_url=https://test.local/drive/safely

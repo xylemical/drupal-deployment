@@ -5,4 +5,4 @@
 
 - hosts: "{{ target_environment }}"
   roles:
-    - role: environ.deploy
+    - role: environ.deploy-user

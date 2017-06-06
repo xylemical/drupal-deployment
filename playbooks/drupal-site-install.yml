@@ -1,0 +1,8 @@
+---
+#
+# This is for setting up a site directory. It may also install a site codebase archive.
+#
+
+- hosts: "{{ target_environment }}"
+  roles:
+    - role: drupal.site.install

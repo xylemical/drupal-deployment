@@ -1,0 +1,38 @@
+---
+dependencies:
+  # Ensure the configuration is loaded and the proper variables are set.
+  - role: config.detection
+    required_vars:
+      - webserver
+      - webserver_owner
+      - webserver_group
+      - deployment_root
+      - drupal_version
+      - site_version
+      - site_config_version
+      - site_url
+
+  # Make sure we have all the facts about the drupal installation give we are installing a site.
+  - role: drupal.facts
+
+  # Extract the site_tarball if it exists into the appropriate location.
+  - role: package.extract
+    vars:
+      package_tarball: "{{ site_tarball }}"
+      package_target_location: "{{ site_code_root }}"
+      package_owner: "{{ webserver_owner }}"
+      package_group: "{{ webserver_group }}"
+    become: true
+    become_user: root
+    when: site_tarball is defined
+
+  # Extract the site_config_tarball if it exists into the appropriate location.
+  - role: package.extract
+    vars:
+      package_tarball: "{{ site_config_tarball }}"
+      package_target_location: "{{ site_config_root }}"
+      package_owner: "{{ webserver_owner }}"
+      package_group: "{{ webserver_group }}"
+    become: true
+    become_user: root
+    when: site_config_tarball is defined

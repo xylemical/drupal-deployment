@@ -1,0 +1,24 @@
+---
+
+- name: Ensure the directory path where the package is to be installed exists.
+  file:
+    path: "{{ package_target_location }}"
+    state: directory
+    mode: 0755
+  when: package_target_location is defined
+
+- name: Extract packages into location
+  unarchive:
+    src: "{{ package_tarball }}"
+    dest: "{{ package_target_location }}"
+    remote_src: "{{ package_remote | default(false) }}"
+  when: package_tarball is defined and package_target_location is defined
+
+- name: Ensure extracted package ownership.
+  file:
+    path: "{{ package_target_location }}"
+    owner: "{{ package_owner }}"
+    group: "{{ package_group }}"
+    recurse: true
+  when: package_target_location is defined and package_owner is defined and package_group is defined
+

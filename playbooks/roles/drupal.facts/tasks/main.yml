@@ -1,6 +1,51 @@
 ---
-- name: Generate drupal facts relevant to the site from the URL.
+
+#
+# Generate the drupal specific related information
+#
+- name: Generate drupal_root.
+  set_fact:
+    drupal_root: "{{ deployment_root }}/core/codebase.{{ drupal_version }}"
+  when: drupal_version is defined
+
+- name: Generate drupal related roots.
+  set_fact:
+    drupal_web_root: "{{ drupal_root }}{{ drupal_web_path }}"
+    drupal_sites_root: "{{ drupal_root }}{{ drupal_web_path }}/sites"
+  when: drupal_version is defined
+
+#
+# Generate the site specific related information.
+#
+- name: The site deploy url may not be the same as the site url.
+  set_fact:
+    site_deploy_url: "{{ site_url }}"
+  when: site_deploy_url is not defined and site_url is defined
+
+- name: Generate site host information from site_url.
   set_fact:
     site_host: "{{ site_url | regex_replace('^https?://', '') | regex_replace('/.*', '') }}"
     site_base_path: "{{ site_url | regex_replace('^https?://', '') | regex_replace('/$', '') | regex_replace('^.*?(/|$)', '/') }}"
     site_conf_path: "{{ site_url | regex_replace('^https?://', '') | regex_replace('/$', '') | regex_replace('(:|/)', '.') }}"
+
+    site_deploy_host: "{{ site_deploy_url | regex_replace('^https?://', '') | regex_replace('/.*', '') }}"
+    site_deploy_base_path: "{{ site_deploy_url | regex_replace('^https?://', '') | regex_replace('/$', '') | regex_replace('^.*?(/|$)', '/') }}"
+    site_deploy_conf_path: "{{ site_deploy_url | regex_replace('^https?://', '') | regex_replace('/$', '') | regex_replace('(:|/)', '.') }}"
+  when: site_url is defined
+
+- name: Generate site_root from configuration path.
+  set_fact:
+    site_root: "{{ deployment_root }}/sites/{{ site_conf_path }}"
+  when: site_url is defined
+
+- name: Generate site facts from the site_root.
+  set_fact:
+    site_files_root: "{{ site_root }}/files"
+    site_private_root: "{{ site_root }}/private"
+  when: site_url is defined
+
+- name: Generate site facts with the site and config version.
+  set_fact:
+    site_code_root: "{{ site_root }}/codebase.{{ site_version }}"
+    site_config_root: "{{ site_root }}/config.{{ site_config_version }}"
+  when: site_url is defined and site_version is defined and site_config_version is defined

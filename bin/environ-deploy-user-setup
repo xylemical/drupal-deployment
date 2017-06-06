@@ -1,0 +1,5 @@
+#!/bin/sh
+
+ansible-playbook -i ../hosts ../playbooks/environ-deploy-user.yml \
+  -e target_environment=development
+

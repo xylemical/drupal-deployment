@@ -1,0 +1,9 @@
+---
+
+- name: Enable yum packages.
+  yum:
+    name: "{{ item }}"
+    state: installed
+  with_items: "{{ packages_list }}"
+  when: ansible_os_family == "Redhat"
+

@@ -1,0 +1,9 @@
+---
+#
+# This installs a drupal core distribution into place.
+#
+
+- hosts: "{{ target_environment }}"
+  roles:
+    - role: drupal.core.install
+

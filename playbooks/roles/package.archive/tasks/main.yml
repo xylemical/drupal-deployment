@@ -1,0 +1,7 @@
+---
+
+- name: Create an archive of a package at a given location.
+  archive:
+    src: "{{ package_target_location }}"
+    dest: "{{ package_tarball }}"
+    format: "{{ package_format | default('gz') }}"

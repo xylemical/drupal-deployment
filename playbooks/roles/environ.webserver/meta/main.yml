@@ -4,17 +4,9 @@ dependencies:
   - role: config.detection
     required_vars:
       - webserver
-      - webserver_user
+      - webserver_owner
       - ntp_timezone
       - certbot_dir
-
-  # Install the certbot as this will be used regardless of the webserver.
-  - role: geerlingguy.certbot
-    vars:
-      certbot_auto_renew_user: "{{ webserver_user }}"
-    become: true
-    become_user: root
-    when: not certbot_ignore
 
   # Install the nginx server with configuration defaults.
   - role: geerlingguy.nginx
@@ -58,4 +50,12 @@ dependencies:
     become: true
     become_user: root
     when: webserver == 'nginx'
+
+  # Install the certbot as this will be used regardless of the webserver.
+  - role: geerlingguy.certbot
+    vars:
+      certbot_auto_renew_user: "{{ webserver_owner }}"
+    become: true
+    become_user: root
+    when: not certbot_ignore
 

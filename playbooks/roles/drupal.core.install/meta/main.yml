@@ -1,0 +1,34 @@
+---
+dependencies:
+  # Ensure the configuration is loaded and the proper variables are set.
+  - role: config.detection
+    required_vars:
+      - webserver_owner
+      - webserver_group
+      - deployment_root
+      - drupal_version
+
+  # Generate the drupal facts.
+  - role: drupal.facts
+
+  # Ensure any selinux setup does not interfere with operations
+  - role: environ.selinux
+    vars:
+      selinux_path: "{{ deployment_root }}"
+      selinux_context: httpd_sys_content_t
+      path: "{{ deployment_root }}"
+      path_user: "{{ webserver_owner }}"
+      path_group: "{{ webserver_group }}"
+    become: true
+    become_user: root
+
+  # Extract the drupal_tarball into the appropriate location.
+  - role: package.extract
+    vars:
+      package_tarball: "{{ drupal_tarball }}"
+      package_target_location: "{{ drupal_root }}"
+      package_owner: "{{ webserver_owner }}"
+      package_group: "{{ webserver_group }}"
+    become: true
+    become_user: root
+    when: drupal_tarball is defined

@@ -1,0 +1,52 @@
+---
+
+- name: Check that the drupal root actually exists.
+  stat:
+    path: "{{ drupal_root }}"
+  become: true
+  become_user: root
+  register: drupal_root_stat
+  failed_when: not drupal_root_stat.stat.exists
+
+- name: Ensure the site directories exist.
+  file:
+    state: directory
+    path: "{{ item }}"
+    mode: 0755
+    owner: "{{ webserver_owner }}"
+    group: "{{ webserver_group }}"
+  become: true
+  become_user: root
+  with_items:
+    - "{{ site_code_root }}"
+    - "{{ site_config_root }}"
+    - "{{ site_files_root }}"
+    - "{{ site_private_root }}"
+    - "{{ drupal_sites_root }}"
+
+- name: Ensure the settings file has been put into the proper place.
+  template:
+    src: "settings.php.j2"
+    dest: "{{ site_code_root }}/settings.php"
+    mode: 0644
+    owner: "{{ webserver_owner }}"
+    group: "{{ webserver_group }}"
+  become: true
+  become_user: root
+
+- name: Ensure all the appropriate symlinks are in place.
+  file:
+    state: link
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ webserver_owner }}"
+    group: "{{ webserver_group }}"
+  become: true
+  become_user: root
+  with_items:
+    - src: "../files"
+      dest: "{{ site_code_root }}/files"
+    - src: "../private"
+      dest: "{{ site_code_root }}/private"
+    - src: "{{ site_code_root }}"
+      dest: "{{ drupal_sites_root }}/{{ site_conf_path }}"

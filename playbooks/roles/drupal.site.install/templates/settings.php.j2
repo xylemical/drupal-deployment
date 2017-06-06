@@ -1,0 +1,10 @@
+<?php
+/**
+ * @file
+ */
+
+include __DIR__ . '/../settings.php';
+$config_directories['sync'] = __DIR__ . '/../config';
+{% if settings_php_extra is defined %}
+{{ settings_php_extra }}
+{% endif %}
